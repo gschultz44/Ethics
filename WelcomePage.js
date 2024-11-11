@@ -15,6 +15,7 @@ const WelcomePage = ({ navigation }) => {
         <Button title="Start Ethical Questions" onPress={() => navigation.navigate("QuestionsPage")} />
         <Button title="About Us" onPress={() => navigation.navigate("AboutPage")} />
         <Button title="Login" onPress={() => navigation.navigate("LoginPage")} />
+        <Button title="Results" onPress={() => navigation.navigate("ResultsPage")} />
       </View>
     </SafeAreaView>
   );

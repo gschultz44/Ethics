@@ -5,6 +5,7 @@ import WelcomePage from './WelcomePage';
 import AboutPage from './AboutPage';
 import LoginPage from './LoginPage';
 import QuestionsPage from './QuestionsPage';
+import ResultsPage from './ResultsPage';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ const App = () => {
         <Stack.Screen name="AboutPage" component={AboutPage} />
         <Stack.Screen name="LoginPage" component={LoginPage} />
         <Stack.Screen name="QuestionsPage" component={QuestionsPage} />
+        <Stack.Screen name="ResultsPage" component={ResultsPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

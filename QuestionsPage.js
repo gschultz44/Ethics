@@ -36,7 +36,7 @@ const QuestionsPage = ({ navigation }) => {
       // Handle completion of all questions (e.g., navigate to results or summary page)
       console.log("All questions answered:", newAnswers);
       // Optionally navigate to a results page
-      // navigation.navigate("ResultsPage");
+      navigation.navigate("ResultsPage", {answers: newAnswers});
     }
   };
 
