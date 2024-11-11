@@ -16,7 +16,7 @@ const AboutPage = ({ navigation }) => {
       <View style={styles.profile}>
         <Text style={styles.name}>Diego Paredes</Text>
         <Text style={styles.university}>Southern Methodist University</Text>
-        <Text style={styles.year}>Junior</Text>
+        <Text style={styles.year}>Senior</Text>
         <Text style={styles.major}>Double Majoring in Computer Science and Data Science</Text>
         <Text 
           style={styles.link} 

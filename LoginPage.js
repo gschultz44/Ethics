@@ -1,27 +1,42 @@
-// LoginPage.js
-
 // Import necessary libraries and components
-import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, createContext, useContext } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+
+// Create a Context for global access
+export const AuthContext = createContext();
 
 // Define the LoginPage component
 const LoginPage = ({ navigation }) => {
-  // Placeholder function for handling login
+  const { setIsLoggedIn, setUserInfo } = useContext(AuthContext); // Access global state setters
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // Handle login action
   const handleLogin = () => {
-    // Add your login logic here
-    console.log("Login button pressed");
+    // Simulate login always successful
+    setIsLoggedIn(true);
+    setUserInfo({ email });
+    console.log("User logged in:", email);
   };
 
-  // Function to navigate to the Forgot Password page (you can create this page later)
+  // Handle forgot password popup
   const handleForgotPassword = () => {
-    // Navigate to the Forgot Password screen
-    console.log("Forgot Password pressed");
-    // navigation.navigate('ForgotPassword'); // Uncomment when you have the Forgot Password screen
+    email == '' ? Alert.alert(
+      "Forgot Password",
+      "Input your email into the email field.",
+      [{ text: "OK", onPress: () => console.log("Forgot Password alert dismissed") }],
+      { cancelable: true }
+    ) : Alert.alert(
+      "Forgot Password",
+      "An email will be sent to your inbox within 24 hours.",
+      [{ text: "OK", onPress: () => console.log("Forgot Password alert dismissed") }],
+      { cancelable: true }
+    );
   };
 
-  // Function to navigate to the Create Account page
+  // Navigate to the Create Account page
   const handleCreateAccount = () => {
-    navigation.navigate('CreateAccount'); // Adjust the screen name to match your Create Account page
+    navigation.navigate('CreateAccount'); // Adjust the screen name as needed
   };
 
   return (
@@ -32,11 +47,15 @@ const LoginPage = ({ navigation }) => {
         placeholder="Email"
         keyboardType="email-address"
         autoCapitalize="none"
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
+        value={password}
+        onChangeText={setPassword}
       />
       <Button title="Login" onPress={handleLogin} />
 
@@ -59,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
-    backgroundColor: '#f5f5f5', // Light gray background
+    backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 24,
@@ -89,5 +108,16 @@ const styles = StyleSheet.create({
   },
 });
 
-// Export the LoginPage component as default
+// AuthProvider component to wrap around the app and provide global state
+export const AuthProvider = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+
+  return (
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, userInfo, setUserInfo }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
 export default LoginPage;
