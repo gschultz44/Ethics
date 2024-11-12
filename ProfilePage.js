@@ -1,18 +1,9 @@
-// ProfilePage.js
-import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { AuthContext } from './LoginPage';
 
 const ProfilePage = () => {
-  const { userInfo, setUserInfo, isLoggedIn } = useContext(AuthContext);
-  const [email, setEmail] = useState(userInfo?.email || '');
-  const [recentQuestions, setRecentQuestions] = useState(userInfo?.recentQuestions || []);
-
-  const handleSaveProfile = () => {
-    const updatedUserInfo = { ...userInfo, email, recentQuestions };
-    setUserInfo(updatedUserInfo);
-    console.log("Profile updated:", updatedUserInfo);
-  };
+  const { userInfo, isLoggedIn } = useContext(AuthContext);
 
   if (!isLoggedIn) {
     return (
@@ -25,17 +16,8 @@ const ProfilePage = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>User Profile</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email ? "Change email" : email}
-        onChangeText={setEmail}
-      />
-      <Button title="Save Profile" onPress={handleSaveProfile} />
-      <Text style={styles.subTitle}>Recent Questions</Text>
-      {recentQuestions.map((question, index) => (
-        <Text key={index} style={styles.question}>{question}</Text>
-      ))}
+      <Text style={styles.infoLabel}>Email:</Text>
+      <Text style={styles.info}>{userInfo.email}</Text>
     </View>
   );
 };
@@ -53,21 +35,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-  input: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 15,
-  },
-  subTitle: {
+  infoLabel: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 10,
   },
-  question: {
+  info: {
     fontSize: 16,
     marginBottom: 5,
   },

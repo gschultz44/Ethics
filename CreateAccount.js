@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { AuthContext } from './LoginPage';
 
 const CreateAccount = ({ navigation }) => {
-  const { setIsLoggedIn, setUserInfo } = useContext(AuthContext);
+  const { setAuthCredentials } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -14,11 +14,9 @@ const CreateAccount = ({ navigation }) => {
       return;
     }
 
-    setIsLoggedIn(true);
-    setUserInfo({ email });
-    console.log("Account created for:", email);
+    setAuthCredentials({ email, password }); // Store credentials globally
     Alert.alert("Success", "Your account has been created!");
-    navigation.navigate('ProfilePage');
+    navigation.navigate('LoginPage'); // Navigate to Login page after account creation
   };
 
   return (
@@ -29,21 +27,21 @@ const CreateAccount = ({ navigation }) => {
         placeholder="Email"
         keyboardType="email-address"
         autoCapitalize="none"
-        value={email == "" ? "Email" : email}
+        value={email}
         onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
-        value={password == "" ? "Enter password" : password}
+        value={password}
         onChangeText={setPassword}
       />
       <TextInput
         style={styles.input}
         placeholder="Confirm Password"
         secureTextEntry
-        value={confirmPassword ? "Confirm password" : confirmPassword}
+        value={confirmPassword}
         onChangeText={setConfirmPassword}
       />
       <Button title="Create Account" onPress={handleCreateAccount} />
